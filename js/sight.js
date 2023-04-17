@@ -6,4 +6,32 @@ class SVGElement {
 
     return this;
   }
+  attr(attrs) {
+    for (const [key, value] of Object.entries()) {
+      this.node.setAttributeNS(null, key, value);
+    }
+    return this;
+  }
+
+  append(element) {
+    const parent =
+      "string" === typeof element
+        ? document.querySelector(element)
+        : element.node;
+    parent.appendChild(this.node);
+    return this;
+  }
+}
+
+class Sight {
+  constructor(selector, width, height) {
+    this.svg = new SVGElement("svg")
+      .attr({
+        viewbox: `0 0 ${width} ${height}`,
+      })
+      .append(selector);
+  }
+  draw(type, attrs) {
+    return SVGAElement(type).attr(attrs).append(this.svg);
+  }
 }
